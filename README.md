@@ -219,9 +219,7 @@ gdb ./sysmon
 4. Test thoroughly
 5. Submit a pull request
 
-## License
-
-Yet to be added
-
 ## Authors
 Piyush Parashar (piyushS3V3N)
+
+[License](https://github.com/piyushS3V3N/pisysmon/blob/master/LICENSE)
