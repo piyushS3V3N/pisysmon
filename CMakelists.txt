@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.10)
+project(pisysmon C)
+
+# Set C standard and warnings
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+
+# Include directories
+include_directories(include)
+
+# Source files
+set(SOURCES
+    src/main.c
+    src/cpu.c
+    src/memory_pi.c
+    src/disk.c
+    src/network.c
+    src/ui.c
+    src/sysmon.c
+)
+
+# Add executable target
+add_executable(pisysmon ${SOURCES})
+
+# Link ncurses
+find_package(Curses REQUIRED)
+target_link_libraries(pisysmon ${CURSES_LIBRARIES})
+
+# Optional install target
+install(TARGETS pisysmon DESTINATION /usr/local/bin)
+
+# Debug build options
+option(DEBUG "Enable debugging symbols" OFF)
+
+if(DEBUG)
+    message(STATUS "Building with debugging enabled")
+    target_compile_definitions(pisysmon PRIVATE DEBUG)
+    target_compile_options(pisysmon PRIVATE -g)
+endif()
+
+# Custom uninstall target
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -E remove /usr/local/bin/pisysmon
+    COMMENT "Uninstalling pisysmon"
+)
